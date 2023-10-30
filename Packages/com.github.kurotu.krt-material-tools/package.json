@@ -1,0 +1,10 @@
+{
+  "name": "com.github.kurotu.krt-material-tools",
+  "displayName": "KRT Material Tools",
+  "version": "0.0.0",
+  "description": "Small tool to manipulate materials",
+  "main": "index.js",
+  "author": {
+    "name": "kurotu"
+  }
+}
