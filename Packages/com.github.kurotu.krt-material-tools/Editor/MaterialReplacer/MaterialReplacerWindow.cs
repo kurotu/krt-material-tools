@@ -61,7 +61,7 @@ namespace KRT.MaterialTools.MaterialReplacer
             titleContent.text = "Material Replacer";
             if (adhocRule == null)
             {
-                adhocRule = new MaterialReplacerRule();
+                adhocRule = CreateInstance<MaterialReplacerRule>();
             }
         }
 
