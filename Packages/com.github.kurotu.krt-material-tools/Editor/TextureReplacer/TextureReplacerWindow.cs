@@ -36,9 +36,9 @@ namespace KRT.MaterialTools.TextureReplacer
                 return;
             }
 
-            var texturePropertyPairs = GetTexturePropertyPairs(material);
-            var textures = texturePropertyPairs.Select(p => p.texture).Where(t => t != null).Distinct().ToArray();
-            Dictionary<Texture, string[]> props = textures.ToDictionary(t => t, t => texturePropertyPairs.Where(p => p.texture == t).Select(p => p.propertyName).ToArray());
+            var texturePropertyDict = GetTexturePropertyDictionary(material);
+            var textures = texturePropertyDict.Select(p => p.Value).Where(t => t != null).Distinct().ToArray();
+            Dictionary<Texture, string[]> props = textures.ToDictionary(t => t, t => texturePropertyDict.Where(p => p.Value == t).Select(p => p.Key).ToArray());
 
             using (var scroll = new EditorGUILayout.ScrollViewScope(scrollPosition))
             {
@@ -112,36 +112,30 @@ namespace KRT.MaterialTools.TextureReplacer
             adhocRule.Clear();
         }
 
-        private List<TexturePropertyPair> GetTexturePropertyPairs(Material material)
+        private Dictionary<string, Texture> GetTexturePropertyDictionary(Material material)
         {
-            var list = new List<TexturePropertyPair>();
+            var dict = new Dictionary<string, Texture>();
             var propNames = material.GetTexturePropertyNames();
             foreach (var prop in propNames)
             {
                 var tex = material.GetTexture(prop);
-                list.Add(new TexturePropertyPair { propertyName = prop, texture = tex });
+                dict[prop] = tex;
             }
-            return list;
+            return dict;
         }
 
         private void ApplyTextures(Material mat, TextureReplacerRule rule)
         {
             Undo.RecordObject(mat, "Apply Textures");
-            var texturePropertyPairs = GetTexturePropertyPairs(mat);
+            var texturePropertyDict = GetTexturePropertyDictionary(mat);
             foreach (var pair in rule.ToDictionary().Where(p => p.Value != null))
             {
-                foreach (var prop in texturePropertyPairs.Where(tp => tp.texture == pair.Key))
+                foreach (var prop in texturePropertyDict.Where(tp => tp.Value == pair.Key))
                 {
-                    mat.SetTexture(prop.propertyName, pair.Value);
+                    mat.SetTexture(prop.Key, pair.Value);
                 }
             }
             Undo.FlushUndoRecordObjects();
-        }
-
-        private class TexturePropertyPair
-        {
-            public string propertyName;
-            public Texture texture;
         }
     }
 }
