@@ -16,13 +16,6 @@ namespace KRT.MaterialTools.TextureReplacer
         [SerializeField]
         internal Vector2 scrollPosition;
 
-        [MenuItem("Tools/KRT Material Tools/Texture Replacer")]
-        private static void ShowFromMenu()
-        {
-            var window = GetWindow<TextureReplacerWindow>();
-            window.Show();
-        }
-
         private void OnEnable()
         {
             titleContent.text = "Texture Replacer";

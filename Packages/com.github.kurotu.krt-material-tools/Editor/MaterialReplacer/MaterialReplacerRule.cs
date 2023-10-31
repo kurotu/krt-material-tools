@@ -1,3 +1,4 @@
+using KRT.MaterialTools.Common;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -7,7 +8,7 @@ namespace KRT.MaterialTools.MaterialReplacer
     /// <summary>
     /// Represents material override setting object.
     /// </summary>
-    [CreateAssetMenu(fileName = "MaterialReplacerRule", menuName = "Material Replacer/Material Replacer Rule")]
+    [CreateAssetMenu(fileName = "MaterialReplacerRule", menuName = MenuEntry.CreateAssetMenu.MaterialReplacerRule, order = (int)MenuEntry.CreateAssetMenu.Priority.MaterialReplacerRule)]
     public class MaterialReplacerRule : ScriptableObject, ISerializationCallbackReceiver
     {
         private Dictionary<Material, Material> m_Materials = new Dictionary<Material, Material>();

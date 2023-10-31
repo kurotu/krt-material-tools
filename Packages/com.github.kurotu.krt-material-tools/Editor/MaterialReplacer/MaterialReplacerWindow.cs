@@ -17,16 +17,10 @@ namespace KRT.MaterialTools.MaterialReplacer
         private MaterialReplacerRule adhocRule;
         private Vector2 scrollPosition;
 
-        [MenuItem("Window/Material Replacer")]
-        [MenuItem("GameObject/Material Replacer", false, 30)]
-        private static void ShowFromMenu()
+        internal void Show(GameObject targetObject)
         {
-            var window = GetWindow<MaterialReplacerWindow>();
-            if (Selection.activeGameObject)
-            {
-                window.targetObject = Selection.activeGameObject;
-            }
-            window.Show();
+            this.targetObject = targetObject;
+            Show();
         }
 
         private static Material[] GetRendererMaterials(GameObject gameObject)
