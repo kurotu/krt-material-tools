@@ -2,26 +2,17 @@ using System;
 using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
-using KRT.MaterialTools.Common;
 using UnityEditor;
 using UnityEngine;
 
-namespace KRT.MaterialTools.MaterialReplacer
+namespace KRT.MaterialTools.Common
 {
-    /// <summary>
-    /// Main class of MaterialReplacer.
-    /// </summary>
-    public static class MaterialReplacer
+    internal static class UpdateChecker
     {
         /// <summary>
         /// Version of MaterialReplacer.
         /// </summary>
-        public static readonly string Version = "1.2.0";
-
-        /// <summary>
-        /// URL for booth.pm.
-        /// </summary>
-        internal const string BoothURL = "https://kurotu.booth.pm/items/4023240";
+        public static readonly string Version = "0.0.0";
 
         /// <summary>
         /// URL for GitHub.
@@ -29,33 +20,20 @@ namespace KRT.MaterialTools.MaterialReplacer
         internal const string GitHubURL = "https://github.com/" + Repository;
 
         /// <summary>
-        /// Internal logger.
-        /// </summary>
-        internal static readonly ILogger Logger = new Logger(new LogHandler());
-
-        /// <summary>
         /// Latest release info.
         /// </summary>
         internal static GitHubRelease latestRelease = null;
 
-        private const string PackageJsonGUID = "1560de9bb4191fa478b78a2d79be403a";
+        private const string PackageJsonGUID = "87dd96c0da3590f4aa8a28cfb43bee61";
 
-        private const string Repository = "kurotu/MaterialReplacer";
-
-        private const string Tag = "MaterialReplacer";
+        private const string Repository = "kurotu/krt-material-tools";
 
         private static readonly HttpClient Client = new HttpClient();
 
-        static MaterialReplacer()
+        static UpdateChecker()
         {
-            var isRelease = true;
-            if (isRelease)
-            {
-                Logger.filterLogType = LogType.Warning;
-            }
-
             Client.Timeout = TimeSpan.FromSeconds(10);
-            Client.DefaultRequestHeaders.Add("User-Agent", $"MaterialReplacer-{Version}");
+            Client.DefaultRequestHeaders.Add("User-Agent", $"KRT Material Tools {Version}");
 
             Task.Run(async () =>
             {
@@ -64,12 +42,12 @@ namespace KRT.MaterialTools.MaterialReplacer
                     latestRelease = await GetLatestRelease();
                     if (latestRelease != null && latestRelease.Version >= new SemVer(Version))
                     {
-                        Logger.LogWarning(Tag, $"New Version {latestRelease.Version} is available.");
+                        Debug.LogWarning($"New Version {latestRelease.Version} is available.");
                     }
                 }
                 catch (Exception e)
                 {
-                    Logger.LogException(e);
+                    Debug.LogException(e);
                     latestRelease = null;
                 }
             });
@@ -83,21 +61,40 @@ namespace KRT.MaterialTools.MaterialReplacer
         /// <returns>true to show notification.</returns>
         internal static bool ShouldNotifyUpdate()
         {
+            var current = new SemVer(Version);
             if (latestRelease == null)
             {
                 return false;
             }
-            if (latestRelease.Version <= new SemVer(Version))
+            if (latestRelease.Version <= current)
             {
                 return false;
             }
+            if (!current.IsPreRelease && latestRelease.Version.IsPreRelease)
+            {
+                return false;
+            }
+
             var span = DateTime.UtcNow - latestRelease.PublishedDateTime;
             return span.TotalDays > 1;
         }
 
-        private static void Export()
+        internal static void NotifyUpdateGUI()
         {
-            AssetDatabase.ExportPackage(AssetRoot, "MaterialReplacer.unitypackage", ExportPackageOptions.Recurse);
+            using (var box = new EditorGUILayout.VerticalScope(GUI.skin.box))
+            {
+                var color = GUI.contentColor;
+                GUI.contentColor = Color.red;
+                EditorGUILayout.LabelField($"Update: {Version} -> {latestRelease.Version}", EditorStyles.boldLabel);
+                GUI.contentColor = color;
+                using (var horizontal = new EditorGUILayout.HorizontalScope())
+                {
+                    if (GUILayout.Button("GitHub"))
+                    {
+                        Application.OpenURL(GitHubURL);
+                    }
+                }
+            }
         }
 
         private static async Task<GitHubRelease> GetLatestRelease()
@@ -108,25 +105,12 @@ namespace KRT.MaterialTools.MaterialReplacer
             var response = await Client.SendAsync(request);
             if (!response.IsSuccessStatusCode)
             {
-                Logger.LogError(Tag, $"Failed {request.Method} {request.RequestUri}: {(int)response.StatusCode} {response.ReasonPhrase}");
+                Debug.LogError($"Failed {request.Method} {request.RequestUri}: {(int)response.StatusCode} {response.ReasonPhrase}");
                 return null;
             }
             var body = await response.Content.ReadAsStringAsync();
             var release = JsonUtility.FromJson<GitHubRelease>(body);
             return release;
-        }
-
-        private class LogHandler : ILogHandler
-        {
-            public void LogFormat(LogType logType, UnityEngine.Object context, string format, params object[] args)
-            {
-                Debug.unityLogger.logHandler.LogFormat(logType, context, format, args);
-            }
-
-            public void LogException(Exception exception, UnityEngine.Object context)
-            {
-                Debug.unityLogger.LogException(exception, context);
-            }
         }
     }
 }

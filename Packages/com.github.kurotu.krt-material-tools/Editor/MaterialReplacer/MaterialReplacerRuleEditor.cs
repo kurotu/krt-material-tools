@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using KRT.MaterialTools.Common;
 using UnityEditor;
 using UnityEditorInternal;
 using UnityEngine;
@@ -23,26 +24,9 @@ namespace KRT.MaterialTools.MaterialReplacer
         /// <inheritdoc/>
         public override void OnInspectorGUI()
         {
-            if (MaterialReplacer.ShouldNotifyUpdate())
+            if (UpdateChecker.ShouldNotifyUpdate())
             {
-                using (var box = new EditorGUILayout.VerticalScope(GUI.skin.box))
-                {
-                    var color = GUI.contentColor;
-                    GUI.contentColor = Color.red;
-                    EditorGUILayout.LabelField($"Update: {MaterialReplacer.Version} -> {MaterialReplacer.latestRelease.Version}", EditorStyles.boldLabel);
-                    GUI.contentColor = color;
-                    using (var horizontal = new EditorGUILayout.HorizontalScope())
-                    {
-                        if (GUILayout.Button("Booth"))
-                        {
-                            Application.OpenURL(MaterialReplacer.BoothURL);
-                        }
-                        if (GUILayout.Button("GitHub"))
-                        {
-                            Application.OpenURL(MaterialReplacer.GitHubURL);
-                        }
-                    }
-                }
+                UpdateChecker.NotifyUpdateGUI();
                 EditorGUILayout.Space();
             }
 

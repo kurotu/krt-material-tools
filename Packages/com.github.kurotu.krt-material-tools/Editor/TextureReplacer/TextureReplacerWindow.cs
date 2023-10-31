@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using KRT.MaterialTools.Common;
 using UnityEditor;
 using UnityEngine;
 
@@ -23,6 +24,12 @@ namespace KRT.MaterialTools.TextureReplacer
 
         private void OnGUI()
         {
+            if (UpdateChecker.ShouldNotifyUpdate())
+            {
+                UpdateChecker.NotifyUpdateGUI();
+                EditorGUILayout.Space();
+            }
+
             material = (Material)EditorGUILayout.ObjectField("Material", material, typeof(Material), false);
             if (material == null)
             {

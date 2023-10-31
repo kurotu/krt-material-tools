@@ -1,6 +1,5 @@
 ﻿using KRT.MaterialTools.Common;
 using UnityEditor;
-using UnityEngine;
 
 namespace KRT.MaterialTools.MaterialReplacer
 {

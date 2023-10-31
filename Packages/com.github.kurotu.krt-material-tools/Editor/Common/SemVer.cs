@@ -15,6 +15,10 @@ namespace KRT.MaterialTools.Common
         private readonly int minor;
         [SerializeField]
         private readonly int patch;
+        [SerializeField]
+        private readonly string preRelease = null;
+
+        internal bool IsPreRelease => preRelease != null;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SemVer"/> class.
@@ -27,6 +31,10 @@ namespace KRT.MaterialTools.Common
             major = int.Parse(split[0]);
             minor = int.Parse(split[1]);
             patch = int.Parse(split[2]);
+            if (part.Length > 1)
+            {
+                preRelease = part[1];
+            }
         }
 
         /// <summary>
@@ -59,6 +67,18 @@ namespace KRT.MaterialTools.Common
                 return true;
             }
 
+            if (a.major == b.major && a.minor == b.minor && a.patch == b.patch)
+            {
+                if(!a.IsPreRelease && b.IsPreRelease)
+                {
+                    return true;
+                }
+                if (a.IsPreRelease && b.IsPreRelease && a.preRelease.CompareTo(b.preRelease) > 0)
+                {
+                    return true;
+                }
+            }
+
             return false;
         }
 
@@ -77,6 +97,18 @@ namespace KRT.MaterialTools.Common
             if (a.major == b.major && a.minor == b.minor && a.patch < b.patch)
             {
                 return true;
+            }
+
+            if (a.major == b.major && a.minor == b.minor && a.patch == b.patch)
+            {
+                if (a.IsPreRelease && !b.IsPreRelease)
+                {
+                    return true;
+                }
+                if (a.IsPreRelease && b.IsPreRelease && a.preRelease.CompareTo(b.preRelease) < 0)
+                {
+                    return true;
+                }
             }
 
             return false;
@@ -106,6 +138,10 @@ namespace KRT.MaterialTools.Common
         /// <returns>"major.minor.patch".</returns>
         public override string ToString()
         {
+            if (IsPreRelease)
+            {
+                return $"{major}.{minor}.{patch}-{preRelease}";
+            }
             return $"{major}.{minor}.{patch}";
         }
 

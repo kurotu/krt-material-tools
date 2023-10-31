@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using KRT.MaterialTools.Common;
 using UnityEditor;
 using UnityEngine;
 
@@ -61,26 +62,9 @@ namespace KRT.MaterialTools.MaterialReplacer
 
         private void OnGUI()
         {
-            if (MaterialReplacer.ShouldNotifyUpdate())
+            if (UpdateChecker.ShouldNotifyUpdate())
             {
-                using (var box = new EditorGUILayout.VerticalScope(GUI.skin.box))
-                {
-                    var color = GUI.contentColor;
-                    GUI.contentColor = Color.red;
-                    EditorGUILayout.LabelField($"Update: {MaterialReplacer.Version} -> {MaterialReplacer.latestRelease.Version}", EditorStyles.boldLabel);
-                    GUI.contentColor = color;
-                    using (var horizontal = new EditorGUILayout.HorizontalScope())
-                    {
-                        if (GUILayout.Button("Booth"))
-                        {
-                            Application.OpenURL(MaterialReplacer.BoothURL);
-                        }
-                        if (GUILayout.Button("GitHub"))
-                        {
-                            Application.OpenURL(MaterialReplacer.GitHubURL);
-                        }
-                    }
-                }
+                UpdateChecker.NotifyUpdateGUI();
                 EditorGUILayout.Space();
             }
 
@@ -133,7 +117,6 @@ namespace KRT.MaterialTools.MaterialReplacer
                                         EditorGUILayout.ObjectField(baseResults[i], typeof(Material), false);
                                     }
                                 }
-                                MaterialReplacer.Logger.Log(resolved);
                                 GUI.backgroundColor = resolved == adhocResults[i] ? activeColor : defaultBackground;
                                 GUI.contentColor = GUI.backgroundColor;
                                 adhocRule[targetMaterials[i]] = (Material)EditorGUILayout.ObjectField(adhocResults[i], typeof(Material), false);
