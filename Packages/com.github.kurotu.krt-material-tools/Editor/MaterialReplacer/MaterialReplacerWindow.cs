@@ -83,12 +83,12 @@ namespace KRT.MaterialTools.MaterialReplacer
                     EditorGUILayout.LabelField("Green materials will be applied.");
                     using (var box = new EditorGUILayout.HorizontalScope())
                     {
-                        EditorGUILayout.LabelField("Original");
+                        EditorGUILayout.LabelField("Original", EditorStyles.boldLabel);
                         if (materialReplacerRule)
                         {
-                            EditorGUILayout.LabelField(materialReplacerRule.name);
+                            EditorGUILayout.LabelField(materialReplacerRule.name, EditorStyles.boldLabel);
                         }
-                        EditorGUILayout.LabelField("Ad Hoc Rule");
+                        EditorGUILayout.LabelField("Ad Hoc Rule", EditorStyles.boldLabel);
                     }
 
                     using (var scroll = new EditorGUILayout.ScrollViewScope(scrollPosition))
@@ -127,6 +127,9 @@ namespace KRT.MaterialTools.MaterialReplacer
                         scrollPosition = scroll.scrollPosition;
                     }
                 }
+            } else
+            {
+                EditorGUILayout.HelpBox("Please select a game object.", MessageType.Info);
             }
 
             EditorGUILayout.Space();
@@ -138,6 +141,8 @@ namespace KRT.MaterialTools.MaterialReplacer
                     OnClickApply();
                 }
             }
+
+            EditorGUILayout.Space();
         }
 
         private void OnClickApply()

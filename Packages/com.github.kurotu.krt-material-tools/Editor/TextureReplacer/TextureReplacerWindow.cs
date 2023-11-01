@@ -17,6 +17,9 @@ namespace KRT.MaterialTools.TextureReplacer
         [SerializeField]
         internal Vector2 scrollPosition;
 
+        private const int TextureFieldWidth = 100;
+        private const int PropertyLabelMinWidth = 80;
+
         private void OnEnable()
         {
             titleContent.text = "Texture Replacer";
@@ -33,12 +36,22 @@ namespace KRT.MaterialTools.TextureReplacer
             material = (Material)EditorGUILayout.ObjectField("Material", material, typeof(Material), false);
             if (material == null)
             {
+                EditorGUILayout.HelpBox("Please select a material.", MessageType.Info);
                 return;
             }
 
             var texturePropertyDict = GetTexturePropertyDictionary(material);
             var textures = texturePropertyDict.Select(p => p.Value).Where(t => t != null).Distinct().ToArray();
             Dictionary<Texture, string[]> props = textures.ToDictionary(t => t, t => texturePropertyDict.Where(p => p.Value == t).Select(p => p.Key).ToArray());
+
+            EditorGUILayout.Space();
+
+            using (var horizontal = new EditorGUILayout.HorizontalScope())
+            {
+                EditorGUILayout.LabelField("Original", EditorStyles.boldLabel, GUILayout.Width(TextureFieldWidth));
+                EditorGUILayout.LabelField("Replacement", EditorStyles.boldLabel, GUILayout.Width(TextureFieldWidth));
+                EditorGUILayout.LabelField("Properties", EditorStyles.boldLabel, GUILayout.MinWidth(PropertyLabelMinWidth));
+            }
 
             using (var scroll = new EditorGUILayout.ScrollViewScope(scrollPosition))
             {
@@ -49,7 +62,7 @@ namespace KRT.MaterialTools.TextureReplacer
                     {
                         using (var disable = new EditorGUI.DisabledGroupScope(true))
                         {
-                            EditorGUILayout.ObjectField(tex, tex.GetType(), false, GUILayout.Width(80), GUILayout.Height(80));
+                            EditorGUILayout.ObjectField(tex, tex.GetType(), false, GUILayout.Width(TextureFieldWidth), GUILayout.Height(TextureFieldWidth));
                         }
 
                         if (!adhocRule.ContainsKey(tex))
@@ -57,14 +70,15 @@ namespace KRT.MaterialTools.TextureReplacer
                             adhocRule.SetTexture(tex, null);
                         }
                         var replacement = adhocRule.GetTexture(tex);
-                        adhocRule.SetTexture(tex, (Texture)EditorGUILayout.ObjectField(replacement, replacement != null ? replacement.GetType() : typeof(Texture), false, GUILayout.Width(80), GUILayout.Height(80)));
+                        adhocRule.SetTexture(tex, (Texture)EditorGUILayout.ObjectField(replacement, replacement != null ? replacement.GetType() : typeof(Texture), false, GUILayout.Width(TextureFieldWidth), GUILayout.Height(TextureFieldWidth)));
 
                         using (var vertical = new EditorGUILayout.VerticalScope())
                         {
                             foreach (var prop in props[tex])
                             {
-                                EditorGUILayout.LabelField(prop, GUILayout.MinWidth(80));
+                                EditorGUILayout.LabelField(prop, GUILayout.MinWidth(PropertyLabelMinWidth));
                             }
+                            EditorGUILayout.Space();
                         }
                     }
                 }
