@@ -20,6 +20,12 @@ namespace KRT.MaterialTools.MaterialReplacer
             }
         }
 
+        [MenuItem(MenuEntry.MenuBar.MigrateLegacyAssets, priority = (int)MenuEntry.MenuBar.Priority.MigrateLegacyAssets)]
+        private static void MigrateAssets()
+        {
+            MaterialReplacerRuleMigrator.MigrateLegacyAssets();
+        }
+
         [MenuItem(MenuEntry.GameObjectMenu.MaterialReplacer, true)]
         private static bool ShowFromMenuValidate()
         {
