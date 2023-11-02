@@ -18,15 +18,20 @@ Small tools to manipulate materials.
 
 `Create/KRT Material Tools/Material Replacer Rule` コンテキストメニューからルールアセットを作成します。
 
-[デモ (YouTube)](https://youtu.be/cPbJyPUZaqo)
-
-![Material Replacer](./images/material-replacer.png)
+過去にプロジェクト内で [Material Replacer](https://github.com/kurotu/MaterialReplacer) を利用していた場合は移行処理が必要です。
+(`Tools/KRT Material Tools/Migrate Legacy Assets` メニュー)
 
 ### Texture Replacer
 
 ルールを定義して一括でテクスチャを置換するツールです。
 
 テクスチャがマテリアルの複数プロパティで参照されているときに便利です。すべての参照を忘れずに変更できます。
+
+## デモ & スクリーンショット
+
+[デモ (YouTube)](https://youtu.be/cPbJyPUZaqo)
+
+![Material Replacer](./images/material-replacer.png)
 
 ![Texture Replacer](./images/texture-replacer.png)
 
@@ -37,6 +42,9 @@ Small tools to manipulate materials.
 ### [推奨] VRChat Creator Companion (VCC)
 
 [このリンク](https://kurotu.github.io/vpm-repos/vpm.html)をクリックして VCC にコミュニティリポジトリを追加します。
+その後 `KRT Material Tools` をプロジェクトに追加します。
+
+VCC で KRT Material Tools をプロジェクトに追加すると [Material Replacer](https://github.com/kurotu/MaterialReplacer) は自動的に削除されます。
 
 ### Unitypackage
 
