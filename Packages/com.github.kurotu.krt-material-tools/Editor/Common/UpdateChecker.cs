@@ -12,7 +12,7 @@ namespace KRT.MaterialTools.Common
         /// <summary>
         /// Version of MaterialReplacer.
         /// </summary>
-        public static readonly string Version = "0.0.0";
+        public static readonly string Version = "0.0.1-alpha.1";
 
         /// <summary>
         /// URL for GitHub.
