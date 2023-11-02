@@ -7,7 +7,7 @@ namespace KRT.MaterialTools.Common
     /// Represents semantic versioning.
     /// </summary>
     [Serializable]
-    internal class SemVer
+    internal class SemVer : IComparable<SemVer>
     {
         [SerializeField]
         private readonly int major;
@@ -163,6 +163,19 @@ namespace KRT.MaterialTools.Common
         private bool HasSameVersion(SemVer a)
         {
             return ToString() == a.ToString();
+        }
+
+        public int CompareTo(SemVer obj)
+        {
+            if (obj == null || this > obj)
+            {
+                return 1;
+            }
+            if (this < obj)
+            {
+                return -1;
+            }
+            return 0;
         }
     }
 }

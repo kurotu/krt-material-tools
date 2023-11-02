@@ -4,7 +4,9 @@
       "version": "file:com.github.kurotu.krt-material-tools",
       "depth": 0,
       "source": "embedded",
-      "dependencies": {}
+      "dependencies": {
+        "com.unity.nuget.newtonsoft-json": "3.0.2"
+      }
     },
     "com.unity.ext.nunit": {
       "version": "1.0.6",
