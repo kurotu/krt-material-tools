@@ -22,6 +22,8 @@ namespace KRT.MaterialTools.MaterialReplacer
             var assetPaths = AssetDatabase.GetAllAssetPaths()
                 .Where(p => p.StartsWith("Assets/") && p.EndsWith(".asset"))
                 .ToArray();
+
+            var counter = 0;
             foreach (var assetPath in assetPaths)
             {
                 var text = File.ReadAllText(assetPath);
@@ -32,9 +34,17 @@ namespace KRT.MaterialTools.MaterialReplacer
                 Debug.Log($"Migrating {assetPath}");
                 text = ReplaceScriptGUID(text, LegacyGUID, NewGUID);
                 File.WriteAllText(assetPath, text);
+                counter++;
             }
-
-            AssetDatabase.Refresh();
+            if (counter > 0)
+            {
+                AssetDatabase.Refresh();
+                EditorUtility.DisplayDialog("Migrate Legacy Assets - KRT Material Tools", $"Migrated {counter} assets.", "OK");
+            }
+            else
+            {
+                EditorUtility.DisplayDialog("Migrate Legacy Assets - KRT Material Tools", "No assets to migrate.", "OK");
+            }
         }
 
         private static string ReplaceScriptGUID(string assetText, string oldGUID, string newGUID)
