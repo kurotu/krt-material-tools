@@ -3,11 +3,18 @@
   "displayName": "KRT Material Tools",
   "version": "0.0.1-alpha.1",
   "description": "Small tools to manipulate materials",
-  "main": "index.js",
+  "license": "MIT",
   "author": {
     "name": "kurotu"
   },
+  "unity": "2019.4",
   "dependencies": {
     "com.unity.nuget.newtonsoft-json": "3.0.2"
-  }
+  },
+  "legacyFolders": {
+    "Assets\\KRT\\MaterialReplacer": ""
+  },
+  "legacyPackages": [
+    "com.github.kurotu.material-replacer"
+  ]
 }
