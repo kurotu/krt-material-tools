@@ -31,6 +31,9 @@ namespace KRT.MaterialTools.Common
 
         private static readonly HttpClient Client = new HttpClient();
 
+        private static readonly ILogger logger = InternalLogger.Logger;
+        private const string TAG = "KRT Material Tools";
+
         static UpdateChecker()
         {
             Client.Timeout = System.TimeSpan.FromSeconds(10);
@@ -45,13 +48,13 @@ namespace KRT.MaterialTools.Common
                 }
                 catch (System.Exception e)
                 {
-                    Debug.LogException(e);
-                    Debug.LogError("Failed to get latest release version.");
+                    logger.LogException(e);
+                    logger.LogError(TAG, "Failed to get latest release version.");
                     latestRelease = null;
                 }
                 if (ShouldNotifyUpdate())
                 {
-                    Debug.LogWarning($"New Version {latestRelease} is available.");
+                    logger.LogWarning(TAG, $"New Version {latestRelease} is available.");
                 }
             });
         }
@@ -101,7 +104,7 @@ namespace KRT.MaterialTools.Common
             var response = await Client.SendAsync(request);
             if (!response.IsSuccessStatusCode)
             {
-                Debug.LogError($"Failed {request.Method} {request.RequestUri}: {(int)response.StatusCode} {response.ReasonPhrase}");
+                logger.LogError(TAG, $"Failed {request.Method} {request.RequestUri}: {(int)response.StatusCode} {response.ReasonPhrase}");
                 return null;
             }
             var body = await response.Content.ReadAsStringAsync();

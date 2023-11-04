@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using System.Linq;
+using KRT.MaterialTools.Common;
 using UnityEditor;
 using UnityEngine;
 
@@ -9,6 +10,9 @@ namespace KRT.MaterialTools.MaterialReplacer
     {
         private const string LegacyGUID = "a9040729468841e45aa2294ceae6ae2a";
         private static readonly string NewGUID;
+
+        private static readonly ILogger logger = InternalLogger.Logger;
+        private const string TAG = "MaterialReplacerRuleMigrator";
 
         static MaterialReplacerRuleMigrator()
         {
@@ -31,7 +35,7 @@ namespace KRT.MaterialTools.MaterialReplacer
                 {
                     continue;
                 }
-                Debug.Log($"Migrating {assetPath}");
+                logger.Log(TAG, $"Migrating {assetPath}");
                 text = ReplaceScriptGUID(text, LegacyGUID, NewGUID);
                 File.WriteAllText(assetPath, text);
                 counter++;
@@ -39,11 +43,15 @@ namespace KRT.MaterialTools.MaterialReplacer
             if (counter > 0)
             {
                 AssetDatabase.Refresh();
-                EditorUtility.DisplayDialog("Migrate Legacy Assets - KRT Material Tools", $"Migrated {counter} assets.", "OK");
+                var message = $"Migrated {counter} assets.";
+                logger.Log(TAG, message);
+                EditorUtility.DisplayDialog("Migrate Legacy Assets - KRT Material Tools", message, "OK");
             }
             else
             {
-                EditorUtility.DisplayDialog("Migrate Legacy Assets - KRT Material Tools", "No assets to migrate.", "OK");
+                const string message = "No assets to migrate in Assets/ folder.";
+                logger.Log(TAG, message);
+                EditorUtility.DisplayDialog("Migrate Legacy Assets - KRT Material Tools", message, "OK");
             }
         }
 
