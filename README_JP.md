@@ -1,6 +1,6 @@
 # KRT Material Tools
 
-Small tools to manipulate materials.
+マテリアルを操作する小さなツール群
 
 [ [English](./README.md) | 日本語 ]
 
@@ -48,7 +48,7 @@ VCC で KRT Material Tools をプロジェクトに追加すると [Material Rep
 
 ### Unitypackage
 
-[リリースページ](https://github.com/kurotu/krt-material-tools/releases/latest) または [Booth](https://booth.pm) から最新の .unitypackage をダウンロードします。
+[リリースページ](https://github.com/kurotu/krt-material-tools/releases/latest) または [Booth](https://kurotu.booth.pm) から最新の .unitypackage をダウンロードします。
 
 ## 動作確認済み環境
 - Unity 2019.4.29f1

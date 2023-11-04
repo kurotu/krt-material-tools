@@ -49,7 +49,7 @@ Then add `KRT Material Tools` to your project.
 
 ### Unitypackage
 
-Download the latest .unitypackage from [the release page](https://github.com/kurotu/krt-material-tools/releases/latest) or [Booth](https://booth.pm).
+Download the latest .unitypackage from [the release page](https://github.com/kurotu/krt-material-tools/releases/latest) or [Booth](https://kurotu.booth.pm).
 
 ## Verified Environments
 
