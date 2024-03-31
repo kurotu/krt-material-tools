@@ -51,12 +51,6 @@ namespace KRT.MaterialTools.TextureReplacer
                 }
             }
 
-            if (material == null)
-            {
-                EditorGUILayout.HelpBox("Please select a material.", MessageType.Info);
-                return;
-            }
-
             using (var scope = new EditorGUI.ChangeCheckScope())
             {
                 lockedToThisMaterial = EditorGUILayout.Toggle("Lock to this material", lockedToThisMaterial);
@@ -68,6 +62,12 @@ namespace KRT.MaterialTools.TextureReplacer
                         adhocRule.Clear();
                     }
                 }
+            }
+
+            if (material == null)
+            {
+                EditorGUILayout.HelpBox("Please select a material.", MessageType.Info);
+                return;
             }
 
             var texturePropertyDict = GetTexturePropertyDictionary(material);
