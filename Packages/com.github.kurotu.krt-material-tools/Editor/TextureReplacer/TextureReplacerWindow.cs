@@ -76,6 +76,12 @@ namespace KRT.MaterialTools.TextureReplacer
 
             EditorGUILayout.Space();
 
+            if (props.Count == 0)
+            {
+                EditorGUILayout.HelpBox("No textures found in the material.", MessageType.Info);
+                return;
+            }
+
             using (var horizontal = new EditorGUILayout.HorizontalScope())
             {
                 EditorGUILayout.LabelField("Original", EditorStyles.boldLabel, GUILayout.Width(TextureFieldWidth));

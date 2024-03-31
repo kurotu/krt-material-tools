@@ -71,15 +71,17 @@ namespace KRT.MaterialTools.MaterialReplacer
             targetObject = (GameObject)EditorGUILayout.ObjectField("Game Object", targetObject, typeof(GameObject), true);
             materialReplacerRule = (MaterialReplacerRule)EditorGUILayout.ObjectField("Material Replacer Rule", materialReplacerRule, typeof(MaterialReplacerRule), false);
 
+            EditorGUILayout.Space();
+
             if (targetObject)
             {
                 var targetMaterials = GetRendererMaterials(targetObject);
                 var baseResults = materialReplacerRule ? targetMaterials.Select(t => materialReplacerRule.ContainsKey(t) ? materialReplacerRule[t] : null).ToArray() : null;
                 var adhocResults = targetMaterials.Select(t => adhocRule.ContainsKey(t) ? adhocRule[t] : null).ToArray();
                 var resolvedRule = ResolveRules(targetMaterials, new MaterialReplacerRule[] { materialReplacerRule, adhocRule });
+
                 if (targetMaterials.Length > 0)
                 {
-                    EditorGUILayout.Space();
                     EditorGUILayout.LabelField("Green materials will be applied.");
                     using (var box = new EditorGUILayout.HorizontalScope())
                     {
@@ -126,6 +128,9 @@ namespace KRT.MaterialTools.MaterialReplacer
                         GUI.backgroundColor = defaultBackground;
                         scrollPosition = scroll.scrollPosition;
                     }
+                } else
+                {
+                    EditorGUILayout.HelpBox("No materials found in the game object and children.", MessageType.Info);
                 }
             } else
             {
