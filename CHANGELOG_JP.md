@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### 変更
+
+- Texture Replacer: プロジェクトビューでマテリアルを選択したときにウィンドウの対象のマテリアルを更新するように変更。
+
 ### 修正
 
 - Texture Replacer: 選択したマテリアルが変更されたときに置換テクスチャがクリアされない問題を修正。

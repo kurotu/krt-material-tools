@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Texture Replacer: Update the window's target material when a material is selected in the project view.
+
 ### Fixed
 
 - Texture Replacer: Replacement textures not cleared when the selected material is changed.

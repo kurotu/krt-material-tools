@@ -15,6 +15,9 @@ namespace KRT.MaterialTools.TextureReplacer
         private TextureReplacerRule adhocRule = new TextureReplacerRule();
 
         [SerializeField]
+        private bool lockedToThisMaterial;
+
+        [SerializeField]
         internal Vector2 scrollPosition;
 
         private const int TextureFieldWidth = 100;
@@ -23,6 +26,12 @@ namespace KRT.MaterialTools.TextureReplacer
         private void OnEnable()
         {
             titleContent.text = "Texture Replacer";
+            EditorApplication.update += OnEditorApplicationUpdate;
+        }
+
+        private void OnDisable()
+        {
+            EditorApplication.update -= OnEditorApplicationUpdate;
         }
 
         private void OnGUI()
@@ -46,6 +55,19 @@ namespace KRT.MaterialTools.TextureReplacer
             {
                 EditorGUILayout.HelpBox("Please select a material.", MessageType.Info);
                 return;
+            }
+
+            using (var scope = new EditorGUI.ChangeCheckScope())
+            {
+                lockedToThisMaterial = EditorGUILayout.Toggle("Lock to this material", lockedToThisMaterial);
+                if (scope.changed)
+                {
+                    if (!lockedToThisMaterial && Selection.activeObject is Material mat && material != mat)
+                    {
+                        material = mat;
+                        adhocRule.Clear();
+                    }
+                }
             }
 
             var texturePropertyDict = GetTexturePropertyDictionary(material);
@@ -111,6 +133,22 @@ namespace KRT.MaterialTools.TextureReplacer
             }
 
             EditorGUILayout.Space();
+        }
+
+        private void OnEditorApplicationUpdate()
+        {
+            if (lockedToThisMaterial) {
+                return;
+            }
+            if (Selection.activeObject is Material mat)
+            {
+                if (material != mat)
+                {
+                    material = mat;
+                    adhocRule.Clear();
+                    Repaint();
+                }
+            }
         }
 
         private void OnClickApply()
