@@ -33,7 +33,15 @@ namespace KRT.MaterialTools.TextureReplacer
                 EditorGUILayout.Space();
             }
 
-            material = (Material)EditorGUILayout.ObjectField("Material", material, typeof(Material), false);
+            using (var scope = new EditorGUI.ChangeCheckScope())
+            {
+                material = (Material)EditorGUILayout.ObjectField("Material", material, typeof(Material), false);
+                if (scope.changed)
+                {
+                    adhocRule.Clear();
+                }
+            }
+
             if (material == null)
             {
                 EditorGUILayout.HelpBox("Please select a material.", MessageType.Info);
