@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Texture Replacer: プロジェクトビューでマテリアルを選択したときにウィンドウの対象のマテリアルを更新するように変更。
 - 置換対象が見つからないときにメッセージを表示するように変更。
+- asmdef で Auto Referenced を false に変更。
 
 ### 修正
 

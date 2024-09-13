@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Texture Replacer: Update the window's target material when a material is selected in the project view.
 - Show a message when replacement targets are not found.
+- Changed Auto Referenced to false in asmdef.
 
 ### Fixed
 
