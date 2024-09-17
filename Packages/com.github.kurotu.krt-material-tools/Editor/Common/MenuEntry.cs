@@ -9,12 +9,14 @@
         {
             internal const string MaterialReplacer = MenuBarRoot + "/Material Replacer";
             internal const string TextureReplacer = MenuBarRoot + "/Texture Replacer";
+            internal const string MaterialDiff = MenuBarRoot + "/Material Diff";
             internal const string MigrateLegacyAssets = MenuBarRoot + "/Migrate Legacy Assets";
 
             internal enum Priority
             {
                 MaterialReplacer = 610, // VRCQuestTools: 600
                 TextureReplacer,
+                MaterialDiff,
                 MigrateLegacyAssets = 630,
             }
         }
