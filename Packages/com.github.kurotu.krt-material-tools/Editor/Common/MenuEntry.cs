@@ -24,6 +24,7 @@
         internal static class AssetMenu
         {
             internal const string TextureReplacer = "Assets/" + Name + "/Texture Replacer";
+            internal const string MaterialDiff = "Assets/" + Name + "/Material Diff";
         }
 
         internal static class CreateAssetMenu
@@ -39,10 +40,12 @@
         internal static class ContextMenu
         {
             internal const string TextureReplacer = "CONTEXT/Material/" + Name + "/Texture Replacer";
+            internal const string MaterialDiff = "CONTEXT/Material/" + Name + "/Material Diff";
 
             internal enum Priority
             {
                 TextureReplacer = 1100,
+                MaterialDiff,
             }
         }
 

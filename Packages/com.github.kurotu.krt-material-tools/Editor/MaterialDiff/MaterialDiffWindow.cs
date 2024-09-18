@@ -15,13 +15,6 @@ namespace KRT.MaterialTools.MaterialDiff
 
         private Vector2 scrollPosition;
 
-        [MenuItem(MenuEntry.MenuBar.MaterialDiff, priority = (int)MenuEntry.MenuBar.Priority.MaterialDiff)]
-
-        private static void Open()
-        {
-            GetWindow<MaterialDiffWindow>().Show();
-        }
-
         private void OnEnable()
         {
             titleContent.text = "Material Diff";
