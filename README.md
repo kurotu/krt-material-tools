@@ -44,6 +44,16 @@ You would not forget to change all of them.
 2. Textures are listed. Set textures to **Replacement** column.
 3. Press **Apply** button to overwrite, or **Save As...** button to save as a new material. Then the textures are applied.
 
+### Material Diff
+
+Tool to display the difference between materials.
+
+This tool would be useful when you want to compare materials.
+
+1. Set two materials to the window.
+2. Differences are displayed.
+3. Press **→** or **←** button to copy the parameter from the left or right material to the other.
+
 ## Installation
 
 There are two options to import the package into your project.
@@ -112,6 +122,16 @@ Download the latest .unitypackage from [the release page](https://github.com/kur
 1. 開いたウィンドウにマテリアルを設定します。
 2. テクスチャが列挙されるので、入れ替えたいテクスチャを **Replacement** 列に設定します。
 3. **Apply** で上書き、または **Save As...** で別マテリアルとして保存し、設定したテクスチャを反映します。
+
+### Material Diff
+
+マテリアルの差分を表示するツールです。
+
+マテリアルを比較したいときに便利です。
+
+1. 開いたウィンドウに2つのマテリアルを設定します。
+2. 差分が表示されます。
+3. **→** または **←** ボタンを押すと、左右のマテリアルのパラメータをもう一方にコピーします。
 
 ## インストール
 
