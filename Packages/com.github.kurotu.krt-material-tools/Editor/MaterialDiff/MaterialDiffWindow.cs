@@ -67,19 +67,21 @@ namespace KRT.MaterialTools.MaterialDiff
                                 continue;
                             }
                             hasDiff = true;
+                            EditorGUI.indentLevel++;
                             EditorGUILayout.LabelField(propName);
+                            EditorGUI.indentLevel--;
                             using (new EditorGUI.DisabledScope(true))
                             {
                                 DrawPropertyValueField(leftValue);
                             }
-                            using (new EditorGUI.DisabledScope(!leftValue.HasValue))
+                            using (new EditorGUI.DisabledScope(!leftValue.HasProperty))
                             {
                                 if (GUILayout.Button(new GUIContent("Å®", "Copy to right"), GUILayout.Width(40)))
                                 {
                                     OnClickCopyToRight(propName, leftValue);
                                 }
                             }
-                            using (new EditorGUI.DisabledScope(!rightValue.HasValue))
+                            using (new EditorGUI.DisabledScope(!rightValue.HasProperty))
                             {
                                 if (GUILayout.Button(new GUIContent("Å©", "Copy to left"), GUILayout.Width(40)))
                                 {
@@ -121,7 +123,7 @@ namespace KRT.MaterialTools.MaterialDiff
 
         private void DrawPropertyValueField(MaterialPropertyValue value)
         {
-            if (value.HasValue)
+            if (value.HasProperty)
             {
                 switch (value.Type)
                 {

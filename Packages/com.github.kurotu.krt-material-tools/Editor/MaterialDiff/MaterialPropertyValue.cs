@@ -7,7 +7,7 @@ namespace KRT.MaterialTools.MaterialDiff
     internal class MaterialPropertyValue
     {
         public ShaderUtil.ShaderPropertyType Type { get; }
-        public bool HasValue => Value != null;
+        public bool HasProperty { get; }
 
         private object Value { get; }
 
@@ -15,6 +15,7 @@ namespace KRT.MaterialTools.MaterialDiff
         {
             Type = type;
             Value = value;
+            HasProperty = true;
         }
 
         public MaterialPropertyValue(Material material, ShaderUtil.ShaderPropertyType type, string propName)
@@ -23,22 +24,28 @@ namespace KRT.MaterialTools.MaterialDiff
             switch (type)
             {
                 case ShaderUtil.ShaderPropertyType.Color:
-                    Value = material.HasColor(propName) ? material.GetColor(propName) : null;
+                    HasProperty = material.HasColor(propName);
+                    Value = HasProperty ? material.GetColor(propName) : null;
                     break;
                 case ShaderUtil.ShaderPropertyType.Vector:
-                    Value = material.HasVector(propName) ? material.GetVector(propName) : null;
+                    HasProperty = material.HasVector(propName);
+                    Value = HasProperty ? material.GetVector(propName) : null;
                     break;
                 case ShaderUtil.ShaderPropertyType.Float:
-                    Value = material.HasFloat(propName) ? material.GetFloat(propName) : null;
+                    HasProperty = material.HasFloat(propName);
+                    Value = HasProperty ? material.GetFloat(propName) : null;
                     break;
                 case ShaderUtil.ShaderPropertyType.Range:
-                    Value = material.HasFloat(propName) ? material.GetFloat(propName) : null;
+                    HasProperty = material.HasFloat(propName);
+                    Value = HasProperty ? material.GetFloat(propName) : null;
                     break;
                 case ShaderUtil.ShaderPropertyType.TexEnv:
-                    Value = material.HasTexture(propName) ? material.GetTexture(propName) : null;
+                    HasProperty = material.HasTexture(propName);
+                    Value = HasProperty ? material.GetTexture(propName) : null;
                     break;
                 case ShaderUtil.ShaderPropertyType.Int:
-                    Value = material.HasInt(propName) ? material.GetInt(propName) : null;
+                    HasProperty = material.HasInt(propName);
+                    Value = HasProperty ? material.GetInt(propName) : null;
                     break;
             }
         }
