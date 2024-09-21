@@ -38,17 +38,38 @@ namespace KRT.MaterialTools.MaterialDiff
             {
                 EditorGUILayout.LabelField("Materials");
                 leftMat = (Material)EditorGUILayout.ObjectField(leftMat, typeof(Material), false);
-                if (GUILayout.Button(new GUIContent("ÅÃ", "Swap left and right"), GUILayout.Width(40)))
+                if (GUILayout.Button(new GUIContent("ÅÃ", "Swap left and right"), GUILayout.Width(80)))
                 {
                     OnClickSwap();
                 }
                 rightMat = (Material)EditorGUILayout.ObjectField(rightMat, typeof(Material), false);
+                EditorGUILayout.Space(12, false);
             }
+
+            EditorGUILayout.Space();
 
             using var scrollView = new EditorGUILayout.ScrollViewScope(scrollPosition);
             scrollPosition = scrollView.scrollPosition;
             if (leftMat && rightMat)
             {
+                if (leftMat.shader != rightMat.shader)
+                {
+                    using (new EditorGUILayout.HorizontalScope())
+                    {
+                        EditorGUILayout.LabelField("Shader");
+                        EditorGUILayout.ObjectField(leftMat.shader, typeof(Shader), false);
+                        if (GUILayout.Button(new GUIContent("Å®", "Copy to right"), GUILayout.Width(40)))
+                        {
+                            OnClickCopyShaderToRight();
+                        }
+                        if (GUILayout.Button(new GUIContent("Å©", "Copy to left"), GUILayout.Width(40)))
+                        {
+                            OnClickCopyShaderToLeft();
+                        }
+                        EditorGUILayout.ObjectField(rightMat.shader, typeof(Shader), false);
+                    }
+                }
+
                 var propTypes = Enum.GetValues(typeof(ShaderUtil.ShaderPropertyType)).Cast<ShaderUtil.ShaderPropertyType>();
                 foreach (var propType in propTypes)
                 {
@@ -56,7 +77,6 @@ namespace KRT.MaterialTools.MaterialDiff
                     if (foldouts[propType])
                     {
                         bool hasDiff = false;
-                        EditorGUI.indentLevel++;
                         foreach (var propName in GetPropertyNames(propType, leftMat, rightMat))
                         {
                             using var horizontal = new EditorGUILayout.HorizontalScope();
@@ -95,22 +115,37 @@ namespace KRT.MaterialTools.MaterialDiff
                         }
                         if (!hasDiff)
                         {
+                            EditorGUI.indentLevel++;
                             EditorGUILayout.LabelField("No difference");
+                            EditorGUI.indentLevel--;
                         }
-                        EditorGUI.indentLevel--;
                     }
                     EditorGUILayout.EndFoldoutHeaderGroup();
                 }
             }
         }
 
+        private void OnClickCopyShaderToLeft()
+        {
+            Undo.RecordObject(leftMat, $"Copy Shader to {leftMat.name}");
+            leftMat.shader = rightMat.shader;
+        }
+
+        private void OnClickCopyShaderToRight()
+        {
+            Undo.RecordObject(rightMat, $"Copy Shader to {rightMat.name}");
+            rightMat.shader = leftMat.shader;
+        }
+
         private void OnClickCopyToLeft(string propName, MaterialPropertyValue rightValue)
         {
+            Undo.RecordObject(leftMat, $"Copy {propName} to {leftMat.name}");
             SetPropertyValue(leftMat, propName, rightValue);
         }
 
         private void OnClickCopyToRight(string propName, MaterialPropertyValue leftValue)
         {
+            Undo.RecordObject(rightMat, $"Copy {propName} to {rightMat.name}");
             SetPropertyValue(rightMat, propName, leftValue);
         }
 
