@@ -16,13 +16,18 @@ namespace KRT.MaterialTools.MaterialDiff
         [MenuItem(MenuEntry.AssetMenu.MaterialDiff, false)]
         private static void AssetMenu()
         {
-            if (Selection.activeObject is Material material)
+            var materials = Selection.GetFiltered<Material>(SelectionMode.Assets);
+            if (materials.Length == 0)
             {
-                ShowWindow(material);
+                ShowWindow();
+            }
+            else if (materials.Length == 1)
+            {
+                ShowWindow(materials[0]);
             }
             else
             {
-                ShowWindow();
+                ShowWindow(materials[0], materials[1]);
             }
         }
 
@@ -39,12 +44,16 @@ namespace KRT.MaterialTools.MaterialDiff
             ShowWindow((Material)command.context);
         }
 
-        private static void ShowWindow(Material mat = null)
+        private static void ShowWindow(Material leftMat = null, Material rightMat = null)
         {
             var window = EditorWindow.GetWindow<MaterialDiffWindow>();
-            if (mat != null)
+            if (leftMat != null)
             {
-                window.leftMat = mat;
+                window.leftMat = leftMat;
+            }
+            if (rightMat != null)
+            {
+                window.rightMat = rightMat;
             }
             window.Show();
         }
