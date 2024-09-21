@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace KRT.MaterialTools.MaterialDiff
 {
-    public class MaterialDiffWindow : EditorWindow
+    internal class MaterialDiffWindow : CommonEditorWindowBase
     {
         public Material leftMat;
         public Material rightMat;
@@ -29,14 +29,8 @@ namespace KRT.MaterialTools.MaterialDiff
             var propTypes = Enum.GetValues(typeof(ShaderUtil.ShaderPropertyType)).Cast<ShaderUtil.ShaderPropertyType>();
         }
 
-        private void OnGUI()
+        protected override void OnGUIInternal()
         {
-            if (UpdateChecker.ShouldNotifyUpdate())
-            {
-                UpdateChecker.NotifyUpdateGUI();
-                EditorGUILayout.Space();
-            }
-
             using (new EditorGUILayout.HorizontalScope())
             {
                 EditorGUILayout.LabelField("Materials");

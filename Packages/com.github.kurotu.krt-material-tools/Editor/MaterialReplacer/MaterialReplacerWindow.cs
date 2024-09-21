@@ -9,7 +9,7 @@ namespace KRT.MaterialTools.MaterialReplacer
     /// <summary>
     /// Window to apply MaterialReplacerRule to renderers.
     /// </summary>
-    internal class MaterialReplacerWindow : EditorWindow
+    internal class MaterialReplacerWindow : CommonEditorWindowBase
     {
         [SerializeField]
         private GameObject targetObject;
@@ -60,14 +60,8 @@ namespace KRT.MaterialTools.MaterialReplacer
             }
         }
 
-        private void OnGUI()
+        protected override void OnGUIInternal()
         {
-            if (UpdateChecker.ShouldNotifyUpdate())
-            {
-                UpdateChecker.NotifyUpdateGUI();
-                EditorGUILayout.Space();
-            }
-
             targetObject = (GameObject)EditorGUILayout.ObjectField("Game Object", targetObject, typeof(GameObject), true);
             materialReplacerRule = (MaterialReplacerRule)EditorGUILayout.ObjectField("Material Replacer Rule", materialReplacerRule, typeof(MaterialReplacerRule), false);
 

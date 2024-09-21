@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace KRT.MaterialTools.TextureReplacer
 {
-    internal class TextureReplacerWindow : EditorWindow
+    internal class TextureReplacerWindow : CommonEditorWindowBase
     {
         internal Material material;
 
@@ -34,14 +34,8 @@ namespace KRT.MaterialTools.TextureReplacer
             EditorApplication.update -= OnEditorApplicationUpdate;
         }
 
-        private void OnGUI()
+        protected override void OnGUIInternal()
         {
-            if (UpdateChecker.ShouldNotifyUpdate())
-            {
-                UpdateChecker.NotifyUpdateGUI();
-                EditorGUILayout.Space();
-            }
-
             using (var scope = new EditorGUI.ChangeCheckScope())
             {
                 material = (Material)EditorGUILayout.ObjectField("Material", material, typeof(Material), false);
