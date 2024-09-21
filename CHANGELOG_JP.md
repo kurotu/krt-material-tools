@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### 追加
+
+- Material Diff: マテリアルの差分を表示する機能を追加。
+
 ### 変更
 
 - Texture Replacer: プロジェクトビューでマテリアルを選択したときにウィンドウの対象のマテリアルを更新するように変更。
