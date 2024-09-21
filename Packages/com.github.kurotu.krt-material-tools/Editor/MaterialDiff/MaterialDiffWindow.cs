@@ -11,7 +11,14 @@ namespace KRT.MaterialTools.MaterialDiff
     {
         public Material leftMat;
         public Material rightMat;
-        public Dictionary<ShaderUtil.ShaderPropertyType, bool> foldouts;
+        public Dictionary<ShaderUtil.ShaderPropertyType, bool> foldouts = 
+            new Dictionary<ShaderUtil.ShaderPropertyType, bool>(
+                Enum.GetValues(typeof(ShaderUtil.ShaderPropertyType))
+                    .Cast<ShaderUtil.ShaderPropertyType>()
+                    .Select(t => KeyValuePair.Create(t, true)
+                )
+            );
+        public bool foldoutKeywords = true;
 
         private Vector2 scrollPosition;
 
@@ -20,10 +27,6 @@ namespace KRT.MaterialTools.MaterialDiff
             titleContent.text = "Material Diff";
             foldouts = new Dictionary<ShaderUtil.ShaderPropertyType, bool>();
             var propTypes = Enum.GetValues(typeof(ShaderUtil.ShaderPropertyType)).Cast<ShaderUtil.ShaderPropertyType>();
-            foreach (var propType in propTypes)
-            {
-                foldouts[propType] = true;
-            }
         }
 
         private void OnGUI()
@@ -51,6 +54,7 @@ namespace KRT.MaterialTools.MaterialDiff
             scrollPosition = scrollView.scrollPosition;
             if (leftMat && rightMat)
             {
+                // Shader
                 using (new EditorGUILayout.HorizontalScope())
                 {
                     EditorGUILayout.LabelField("Shader");
@@ -75,6 +79,66 @@ namespace KRT.MaterialTools.MaterialDiff
                     }
                 }
 
+                // Keywords
+                foldoutKeywords = EditorGUILayout.BeginFoldoutHeaderGroup(foldoutKeywords, "Keywords");
+                if (foldoutKeywords)
+                {
+                    var leftKeywords = leftMat.shaderKeywords;
+                    var rightKeywords = rightMat.shaderKeywords;
+                    var allKeywords = leftKeywords.Concat(rightKeywords).Distinct().OrderBy(s => s).ToArray();
+                    var hasKeywordDiff = false;
+                    foreach (var keyword in allKeywords)
+                    {
+                        var leftHas = leftKeywords.Contains(keyword);
+                        var rightHas = rightKeywords.Contains(keyword);
+                        if (leftHas && rightHas)
+                        {
+                            continue;
+                        }
+                        hasKeywordDiff = true;
+                        using var horizontal = new EditorGUILayout.HorizontalScope();
+                        EditorGUI.indentLevel++;
+                        EditorGUILayout.LabelField(keyword);
+                        EditorGUI.indentLevel--;
+                        EditorGUILayout.LabelField(leftHas ? "Yes" : "No");
+                        if (GUILayout.Button(new GUIContent("Å®", "Copy to right"), GUILayout.Width(40)))
+                        {
+                            if (leftHas)
+                            {
+                                Undo.RecordObject(rightMat, $"Copy keyword {keyword} to {rightMat.name}");
+                                rightMat.EnableKeyword(keyword);
+                            }
+                            else
+                            {
+                                Undo.RecordObject(rightMat, $"Disable keyword {keyword} of {rightMat.name}");
+                                rightMat.DisableKeyword(keyword);
+                            }
+                        }
+                        if (GUILayout.Button(new GUIContent("Å©", "Copy to left"), GUILayout.Width(40)))
+                        {
+                            if (rightHas)
+                            {
+                                Undo.RecordObject(leftMat, $"Copy keyword {keyword} to {leftMat.name}");
+                                leftMat.EnableKeyword(keyword);
+                            }
+                            else
+                            {
+                                Undo.RecordObject(leftMat, $"Disable keyword {keyword} of {leftMat.name}");
+                                leftMat.DisableKeyword(keyword);
+                            }
+                        }
+                        EditorGUILayout.LabelField(rightHas ? "Yes" : "No");
+                    }
+                    if (!hasKeywordDiff)
+                    {
+                        EditorGUI.indentLevel++;
+                        EditorGUILayout.LabelField("No difference");
+                        EditorGUI.indentLevel--;
+                    }
+                }
+                EditorGUILayout.EndFoldoutHeaderGroup();
+
+                // Properties
                 var propTypes = Enum.GetValues(typeof(ShaderUtil.ShaderPropertyType)).Cast<ShaderUtil.ShaderPropertyType>();
                 foreach (var propType in propTypes)
                 {
