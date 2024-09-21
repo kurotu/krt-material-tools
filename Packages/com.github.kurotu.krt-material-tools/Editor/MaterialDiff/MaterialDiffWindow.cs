@@ -11,7 +11,7 @@ namespace KRT.MaterialTools.MaterialDiff
     {
         public Material leftMat;
         public Material rightMat;
-        public Dictionary<ShaderUtil.ShaderPropertyType, bool> foldouts = 
+        public Dictionary<ShaderUtil.ShaderPropertyType, bool> foldouts =
             new Dictionary<ShaderUtil.ShaderPropertyType, bool>(
                 Enum.GetValues(typeof(ShaderUtil.ShaderPropertyType))
                     .Cast<ShaderUtil.ShaderPropertyType>()
@@ -43,7 +43,7 @@ namespace KRT.MaterialTools.MaterialDiff
                 leftMat = (Material)EditorGUILayout.ObjectField(leftMat, typeof(Material), false);
                 if (GUILayout.Button(new GUIContent("ÅÃ", "Swap left and right"), GUILayout.Width(80)))
                 {
-                    OnClickSwap();
+                    OnClickSwapMaterials();
                 }
                 rightMat = (Material)EditorGUILayout.ObjectField(rightMat, typeof(Material), false);
             }
@@ -66,11 +66,11 @@ namespace KRT.MaterialTools.MaterialDiff
                     {
                         if (GUILayout.Button(new GUIContent("Å®", "Copy to right"), GUILayout.Width(40)))
                         {
-                            OnClickCopyShaderToRight();
+                            OnClickCopyShader(rightMat, leftMat.shader);
                         }
                         if (GUILayout.Button(new GUIContent("Å©", "Copy to left"), GUILayout.Width(40)))
                         {
-                            OnClickCopyShaderToLeft();
+                            OnClickCopyShader(leftMat, rightMat.shader);
                         }
                     }
                     using (new EditorGUI.DisabledScope(true))
@@ -105,26 +105,22 @@ namespace KRT.MaterialTools.MaterialDiff
                         {
                             if (leftHas)
                             {
-                                Undo.RecordObject(rightMat, $"Copy keyword {keyword} to {rightMat.name}");
-                                rightMat.EnableKeyword(keyword);
+                                OnClickEnableKeyword(rightMat, keyword);
                             }
                             else
                             {
-                                Undo.RecordObject(rightMat, $"Disable keyword {keyword} of {rightMat.name}");
-                                rightMat.DisableKeyword(keyword);
+                                OnClickDisableKeyword(rightMat, keyword);
                             }
                         }
                         if (GUILayout.Button(new GUIContent("Å©", "Copy to left"), GUILayout.Width(40)))
                         {
                             if (rightHas)
                             {
-                                Undo.RecordObject(leftMat, $"Copy keyword {keyword} to {leftMat.name}");
-                                leftMat.EnableKeyword(keyword);
+                                OnClickEnableKeyword(leftMat, keyword);
                             }
                             else
                             {
-                                Undo.RecordObject(leftMat, $"Disable keyword {keyword} of {leftMat.name}");
-                                leftMat.DisableKeyword(keyword);
+                                OnClickDisableKeyword(leftMat, keyword);
                             }
                         }
                         EditorGUILayout.LabelField(rightHas ? "Yes" : "No");
@@ -167,14 +163,14 @@ namespace KRT.MaterialTools.MaterialDiff
                             {
                                 if (GUILayout.Button(new GUIContent("Å®", "Copy to right"), GUILayout.Width(40)))
                                 {
-                                    OnClickCopyToRight(propName, leftValue);
+                                    OnClickCopyProperty(rightMat, propName, leftValue);
                                 }
                             }
                             using (new EditorGUI.DisabledScope(!rightValue.HasProperty))
                             {
                                 if (GUILayout.Button(new GUIContent("Å©", "Copy to left"), GUILayout.Width(40)))
                                 {
-                                    OnClickCopyToLeft(propName, rightValue);
+                                    OnClickCopyProperty(leftMat, propName, rightValue);
                                 }
                             }
                             using (new EditorGUI.DisabledScope(true))
@@ -194,35 +190,35 @@ namespace KRT.MaterialTools.MaterialDiff
             }
         }
 
-        private void OnClickCopyShaderToLeft()
-        {
-            Undo.RecordObject(leftMat, $"Copy Shader to {leftMat.name}");
-            leftMat.shader = rightMat.shader;
-        }
-
-        private void OnClickCopyShaderToRight()
-        {
-            Undo.RecordObject(rightMat, $"Copy Shader to {rightMat.name}");
-            rightMat.shader = leftMat.shader;
-        }
-
-        private void OnClickCopyToLeft(string propName, MaterialPropertyValue rightValue)
-        {
-            Undo.RecordObject(leftMat, $"Copy {propName} to {leftMat.name}");
-            SetPropertyValue(leftMat, propName, rightValue);
-        }
-
-        private void OnClickCopyToRight(string propName, MaterialPropertyValue leftValue)
-        {
-            Undo.RecordObject(rightMat, $"Copy {propName} to {rightMat.name}");
-            SetPropertyValue(rightMat, propName, leftValue);
-        }
-
-        private void OnClickSwap()
+        private void OnClickSwapMaterials()
         {
             var tmp = leftMat;
             leftMat = rightMat;
             rightMat = tmp;
+        }
+
+        private void OnClickCopyShader(Material target, Shader shader)
+        {
+            Undo.RecordObject(target, $"Copy Shader to {target.name}");
+            target.shader = shader;
+        }
+
+        private void OnClickEnableKeyword(Material target, string keyword)
+        {
+            Undo.RecordObject(target, $"Copy keyword {keyword} to {target.name}");
+            target.EnableKeyword(keyword);
+        }
+
+        private void OnClickDisableKeyword(Material target, string keyword)
+        {
+            Undo.RecordObject(target, $"Disable keyword {keyword} of {target.name}");
+            target.DisableKeyword(keyword);
+        }
+
+        private void OnClickCopyProperty(Material target, string propName, MaterialPropertyValue value)
+        {
+            Undo.RecordObject(target, $"Copy {propName} to {target.name}");
+            SetPropertyValue(target, propName, value);
         }
 
         private void DrawPropertyValueField(MaterialPropertyValue value)
