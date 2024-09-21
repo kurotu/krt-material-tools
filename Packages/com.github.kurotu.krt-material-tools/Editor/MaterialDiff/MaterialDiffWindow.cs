@@ -43,7 +43,6 @@ namespace KRT.MaterialTools.MaterialDiff
                     OnClickSwap();
                 }
                 rightMat = (Material)EditorGUILayout.ObjectField(rightMat, typeof(Material), false);
-                EditorGUILayout.Space(12, false);
             }
 
             EditorGUILayout.Space();
@@ -52,12 +51,15 @@ namespace KRT.MaterialTools.MaterialDiff
             scrollPosition = scrollView.scrollPosition;
             if (leftMat && rightMat)
             {
-                if (leftMat.shader != rightMat.shader)
+                using (new EditorGUILayout.HorizontalScope())
                 {
-                    using (new EditorGUILayout.HorizontalScope())
+                    EditorGUILayout.LabelField("Shader");
+                    using (new EditorGUI.DisabledScope(true))
                     {
-                        EditorGUILayout.LabelField("Shader");
                         EditorGUILayout.ObjectField(leftMat.shader, typeof(Shader), false);
+                    }
+                    using (new EditorGUI.DisabledScope(leftMat.shader == rightMat.shader))
+                    {
                         if (GUILayout.Button(new GUIContent("Å®", "Copy to right"), GUILayout.Width(40)))
                         {
                             OnClickCopyShaderToRight();
@@ -66,6 +68,9 @@ namespace KRT.MaterialTools.MaterialDiff
                         {
                             OnClickCopyShaderToLeft();
                         }
+                    }
+                    using (new EditorGUI.DisabledScope(true))
+                    {
                         EditorGUILayout.ObjectField(rightMat.shader, typeof(Shader), false);
                     }
                 }
