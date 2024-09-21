@@ -38,7 +38,7 @@ namespace KRT.MaterialTools.MaterialDiff
             {
                 EditorGUILayout.LabelField("Materials");
                 leftMat = (Material)EditorGUILayout.ObjectField(leftMat, typeof(Material), false);
-                if (GUILayout.Button(new GUIContent("ÅÃ", "Swap left and right")))
+                if (GUILayout.Button(new GUIContent("ÅÃ", "Swap left and right"), GUILayout.Width(40)))
                 {
                     OnClickSwap();
                 }
@@ -72,13 +72,19 @@ namespace KRT.MaterialTools.MaterialDiff
                             {
                                 DrawPropertyValueField(leftValue);
                             }
-                            if (GUILayout.Button(new GUIContent("Å®", "Copy to right")))
+                            using (new EditorGUI.DisabledScope(!leftValue.HasValue))
                             {
-                                OnClickCopyToRight(propName, leftValue);
+                                if (GUILayout.Button(new GUIContent("Å®", "Copy to right"), GUILayout.Width(40)))
+                                {
+                                    OnClickCopyToRight(propName, leftValue);
+                                }
                             }
-                            if (GUILayout.Button(new GUIContent("Å©", "Copy to left")))
+                            using (new EditorGUI.DisabledScope(!rightValue.HasValue))
                             {
-                                OnClickCopyToLeft(propName, rightValue);
+                                if (GUILayout.Button(new GUIContent("Å©", "Copy to left"), GUILayout.Width(40)))
+                                {
+                                    OnClickCopyToLeft(propName, rightValue);
+                                }
                             }
                             using (new EditorGUI.DisabledScope(true))
                             {
