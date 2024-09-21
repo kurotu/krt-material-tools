@@ -7,7 +7,9 @@ namespace KRT.MaterialTools.MaterialDiff
     internal class MaterialPropertyValue
     {
         public ShaderUtil.ShaderPropertyType Type { get; }
-        public object Value { get; }
+        public bool HasValue => Value != null;
+
+        private object Value { get; }
 
         public MaterialPropertyValue(ShaderUtil.ShaderPropertyType type, object value)
         {
@@ -98,6 +100,14 @@ namespace KRT.MaterialTools.MaterialDiff
         public bool SameValue(MaterialPropertyValue other)
         {
             if (Type != other.Type)
+            {
+                return false;
+            }
+            if (Value == null)
+            {
+                return other.Value == null;
+            }
+            if (other.Value == null)
             {
                 return false;
             }

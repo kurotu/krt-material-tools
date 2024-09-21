@@ -115,55 +115,35 @@ namespace KRT.MaterialTools.MaterialDiff
 
         private void DrawPropertyValueField(MaterialPropertyValue value)
         {
-            switch (value.Type)
+            if (value.HasValue)
             {
-                case ShaderUtil.ShaderPropertyType.Color:
-                    if (value.Value == null)
-                    {
-                        EditorGUILayout.LabelField("None");
-                    }
-                    EditorGUILayout.ColorField(value.GetColor());
-                    break;
-                case ShaderUtil.ShaderPropertyType.Vector:
-                    if (value.Value == null)
-                    {
-                        EditorGUILayout.LabelField("None");
-                    }
-                    EditorGUILayout.Vector4Field("", value.GetVector());
-                    break;
-                case ShaderUtil.ShaderPropertyType.Float:
-                    if (value.Value == null)
-                    {
-                        EditorGUILayout.LabelField("None");
-                    }
-                    else
-                    {
+                switch (value.Type)
+                {
+                    case ShaderUtil.ShaderPropertyType.Color:
+                        EditorGUILayout.ColorField(value.GetColor());
+                        break;
+                    case ShaderUtil.ShaderPropertyType.Vector:
+                        EditorGUILayout.Vector4Field("", value.GetVector());
+                        break;
+                    case ShaderUtil.ShaderPropertyType.Float:
                         EditorGUILayout.FloatField(value.GetFloat());
-                    }
-                    break;
-                case ShaderUtil.ShaderPropertyType.Range:
-                    if (value.Value == null)
-                    {
-                        EditorGUILayout.LabelField("None");
-                    }
-                    else
-                    {
+                        break;
+                    case ShaderUtil.ShaderPropertyType.Range:
                         EditorGUILayout.FloatField(value.GetRange());
-                    }
-                    break;
-                case ShaderUtil.ShaderPropertyType.TexEnv:
-                    EditorGUILayout.ObjectField(value.GetTexture(), typeof(Texture), false);
-                    break;
-                case ShaderUtil.ShaderPropertyType.Int:
-                    if (value.Value == null)
-                    {
-                        EditorGUILayout.LabelField("None");
-                    }
-                    else
-                    {
+                        break;
+                    case ShaderUtil.ShaderPropertyType.TexEnv:
+                        EditorGUILayout.ObjectField(value.GetTexture(), typeof(Texture), false);
+                        break;
+                    case ShaderUtil.ShaderPropertyType.Int:
                         EditorGUILayout.IntField(value.GetInt());
-                    }
-                    break;
+                        break;
+                }
+            }
+            else
+            {
+                var style = new GUIStyle(EditorStyles.label);
+                style.fixedWidth = 0;
+                EditorGUILayout.LabelField("None", GUILayout.MinWidth(50));
             }
         }
 
