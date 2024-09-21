@@ -10,6 +10,7 @@
             internal const string MaterialReplacer = MenuBarRoot + "/Material Replacer";
             internal const string TextureReplacer = MenuBarRoot + "/Texture Replacer";
             internal const string MaterialDiff = MenuBarRoot + "/Material Diff";
+            internal const string QuickVariant = MenuBarRoot + "/Quick Variant";
             internal const string MigrateLegacyAssets = MenuBarRoot + "/Migrate Legacy Assets";
 
             internal enum Priority
@@ -17,6 +18,7 @@
                 MaterialReplacer = 610, // VRCQuestTools: 600
                 TextureReplacer,
                 MaterialDiff,
+                QuickVariant,
                 MigrateLegacyAssets = 630,
             }
         }
@@ -52,10 +54,12 @@
         internal static class GameObjectMenu
         {
             internal const string MaterialReplacer = "GameObject/" + Name + "/Material Replacer";
+            internal const string QuickVariant = "GameObject/" + Name + "/Quick Variant";
 
             internal enum Priority
             {
                 MaterialReplacer = 30,
+                QuickVariant,
             }
         }
     }
