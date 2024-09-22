@@ -163,7 +163,29 @@ namespace KRT.MaterialTools.QuickVariant
                 .Where(a => a.runtimeAnimatorController != null)
                 .SelectMany(a => a.runtimeAnimatorController.animationClips)
                 .SelectMany(GetMaterials);
-            return rendererMaterials.Concat(animatorMaterials).Distinct().OrderBy(m => m.name).ToArray();
+#if KMT_VRCSDK3A
+            var av3Materials = go.GetComponentsInChildren<VRC.SDK3.Avatars.Components.VRCAvatarDescriptor>(true)
+                .SelectMany(d => d.baseAnimationLayers)
+                .Where(l => !l.isDefault && l.animatorController != null)
+                .SelectMany(l => l.animatorController.animationClips)
+                .SelectMany(GetMaterials);
+#endif
+
+#if KMT_MODULAR_AVATAR
+            var maMaterials = go.GetComponentsInChildren<nadena.dev.modular_avatar.core.ModularAvatarMergeAnimator>(true)
+                .SelectMany(ma => ma.animator.animationClips)
+                .SelectMany(GetMaterials);
+#endif
+
+            return rendererMaterials
+                .Concat(animatorMaterials)
+#if KMT_VRCSDK3A
+                .Concat(av3Materials)
+#endif
+#if KMT_MODULAR_AVATAR
+                .Concat(maMaterials)
+#endif
+                .Distinct().OrderBy(m => m.name).ToArray();
         }
 
         private static Material[] GetMaterials(AnimationClip clip)
