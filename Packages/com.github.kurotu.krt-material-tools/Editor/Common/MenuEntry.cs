@@ -10,6 +10,7 @@
             internal const string MaterialReplacer = MenuBarRoot + "/Material Replacer";
             internal const string TextureReplacer = MenuBarRoot + "/Texture Replacer";
             internal const string MaterialDiff = MenuBarRoot + "/Material Diff";
+            internal const string MaterialVariant = MenuBarRoot + "/Material Variant";
             internal const string QuickVariant = MenuBarRoot + "/Quick Variant";
             internal const string MigrateLegacyAssets = MenuBarRoot + "/Migrate Legacy Assets";
 
@@ -18,6 +19,7 @@
                 MaterialReplacer = 610, // VRCQuestTools: 600
                 TextureReplacer,
                 MaterialDiff,
+                MaterialVariant,
                 QuickVariant,
                 MigrateLegacyAssets = 630,
             }
@@ -25,8 +27,10 @@
 
         internal static class AssetMenu
         {
-            internal const string TextureReplacer = "Assets/" + Name + "/Texture Replacer";
-            internal const string MaterialDiff = "Assets/" + Name + "/Material Diff";
+            private const string AssetMenuRoot = "Assets/" + Name;
+            internal const string TextureReplacer = AssetMenuRoot + "/Texture Replacer";
+            internal const string MaterialDiff = AssetMenuRoot + "/Material Diff";
+            internal const string MaterialVariant = AssetMenuRoot + "/Material Variant";
         }
 
         internal static class CreateAssetMenu

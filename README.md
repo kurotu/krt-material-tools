@@ -56,6 +56,18 @@ This tool would be useful when you want to create variants for each material of 
 2. Press **Create Materials** button. Material variants are created for each material in the selected folder.
 3. Created materials are applied to renderers of the game object.
 
+### Material Variant
+
+Tool to create material variants in bulk from multiple materials.
+
+Unity's Material Variant rihgt-click menu can create one variant from one material. But this tool can create multiple variants from multiple materials at once.
+
+![Material Variant](./images/material-variant.png)
+
+1. Select materials in the project view.
+2. Right-click and select **KRT Material Tools/Material Variant**.
+3. Press **Create Materials** button. Material variants are created for each material in the selected folder.
+
 ### Material Diff
 
 Tool to display the difference between materials.
@@ -146,6 +158,18 @@ GameObjectに含まれている各マテリアルに対してMaterial Variantを
 1. 開いたウィンドウに GameObject を設定します。
 2. **Create Materials** を押すと、選択したフォルダに対して各マテリアルのVariantが作成されます。
 3. 作成されたマテリアルがGameObjectのRendererに適用されます。
+
+### Material Variant
+
+複数のマテリアルからMaterial Variantを一括で作成するツールです。
+
+UnityのMaterial Variant右クリックメニューは1つのマテリアルから1つのVariantを作成しますが、このツールは複数のマテリアルから複数のVariantを一括で作成できます。
+
+![Material Variant](./images/material-variant.png)
+
+1. プロジェクトビューでマテリアルを選択します。
+2. 右クリックして **KRT Material Tools/Material Variant** を選択します。
+3. **Create Materials** を押すと、選択したフォルダに対して各マテリアルのVariantが作成されます。
 
 ### Material Diff
 
