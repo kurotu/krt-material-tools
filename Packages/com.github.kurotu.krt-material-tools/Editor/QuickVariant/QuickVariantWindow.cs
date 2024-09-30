@@ -15,9 +15,7 @@ namespace KRT.MaterialTools.QuickVariant
 
         public GameObject Target;
         public List<Material> SelectedMaterials = new List<Material>();
-#if UNITY_2022_1_OR_NEWER
         public bool CreateAsVariant = true;
-#endif
         public string Prefix = DefaultPrefix;
         public string Suffix = DefaultVariantSuffix;
         public bool ApplyToRenderers = true;
@@ -90,6 +88,8 @@ namespace KRT.MaterialTools.QuickVariant
 
 #if UNITY_2022_1_OR_NEWER
             CreateAsVariant = EditorGUILayout.Toggle("Create Material Variant", CreateAsVariant);
+#else
+            CreateAsVariant = false;
 #endif
             if (CreateAsVariant && Suffix == DefaultCopySuffix)
             {
