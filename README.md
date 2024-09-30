@@ -18,7 +18,7 @@ This save the hassle of manually changing materials one by one. It would be usef
 
 [Demo (YouTube)](https://youtu.be/cPbJyPUZaqo)
 
-![Material Replacer](./images/material-replacer.png)
+![Material Replacer](./Images~/material-replacer.png)
 
 1. Set a game object to the window.
 2. Materials of child objects are listed. Set materials to **Ad Hoc Rule** column.
@@ -38,7 +38,7 @@ Tool to replace textures at once by defining replacement rules.
 This tool would be useful when a texture is referenced by multiple material properties.
 You would not forget to change all of them.
 
-![Texture Replacer](./images/texture-replacer.png)
+![Texture Replacer](./Images~/texture-replacer.png)
 
 1. Set a material to the window.
 2. Textures are listed. Set textures to **Replacement** column.
@@ -50,7 +50,7 @@ Tool to create material variants in bulk.
 
 This tool would be useful when you want to create variants for each material of the game object.
 
-![Quick Variant](./images/quick-variant.png)
+![Quick Variant](./Images~/quick-variant.png)
 
 1. Set a game object to the window.
 2. Press **Create Materials** button. Material variants are created for each material in the selected folder.
@@ -62,7 +62,7 @@ Tool to create material variants in bulk from multiple materials.
 
 Unity's Material Variant rihgt-click menu can create one variant from one material. But this tool can create multiple variants from multiple materials at once.
 
-![Material Variant](./images/material-variant.png)
+![Material Variant](./Images~/material-variant.png)
 
 1. Select materials in the project view.
 2. Right-click and select **KRT Material Tools/Material Variant**.
@@ -121,7 +121,7 @@ Download the latest .unitypackage from [the release page](https://github.com/kur
 
 [デモ (YouTube)](https://youtu.be/cPbJyPUZaqo)
 
-![Material Replacer](./images/material-replacer.png)
+![Material Replacer](./Images~/material-replacer.png)
 
 1. 開いたウィンドウに Game Object を設定します。
 2. 子オブジェクトのマテリアルが列挙されるので、入れ替えたいマテリアルを **Ad Hoc Rule** 列に設定します。
@@ -141,7 +141,7 @@ Download the latest .unitypackage from [the release page](https://github.com/kur
 テクスチャがマテリアルの複数プロパティで参照されているときに便利です。
 すべての参照を忘れずに変更できます。
 
-![Texture Replacer](./images/texture-replacer.png)
+![Texture Replacer](./Images~/texture-replacer.png)
 
 1. 開いたウィンドウにマテリアルを設定します。
 2. テクスチャが列挙されるので、入れ替えたいテクスチャを **Replacement** 列に設定します。
@@ -153,7 +153,7 @@ Material Variantを一括で作成するツールです。
 
 GameObjectに含まれている各マテリアルに対してMaterial Variantを作成したいときに便利です。
 
-![Quick Variant](./images/quick-variant.png)
+![Quick Variant](./Images~/quick-variant.png)
 
 1. 開いたウィンドウに GameObject を設定します。
 2. **Create Materials** を押すと、選択したフォルダに対して各マテリアルのVariantが作成されます。
@@ -165,7 +165,7 @@ GameObjectに含まれている各マテリアルに対してMaterial Variantを
 
 UnityのMaterial Variant右クリックメニューは1つのマテリアルから1つのVariantを作成しますが、このツールは複数のマテリアルから複数のVariantを一括で作成できます。
 
-![Material Variant](./images/material-variant.png)
+![Material Variant](./Images~/material-variant.png)
 
 1. プロジェクトビューでマテリアルを選択します。
 2. 右クリックして **KRT Material Tools/Material Variant** を選択します。
