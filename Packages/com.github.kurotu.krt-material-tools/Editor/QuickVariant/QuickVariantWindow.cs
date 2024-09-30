@@ -9,11 +9,17 @@ namespace KRT.MaterialTools.QuickVariant
 {
     internal class QuickVariantWindow : CommonEditorWindowBase
     {
+        private const string DefaultPrefix = "";
+        private const string DefaultVariantSuffix = " Variant";
+        private const string DefaultCopySuffix = " Copy";
+
         public GameObject Target;
         public List<Material> SelectedMaterials = new List<Material>();
 #if UNITY_2022_1_OR_NEWER
         public bool CreateAsVariant = true;
 #endif
+        public string Prefix = DefaultPrefix;
+        public string Suffix = DefaultVariantSuffix;
         public bool ApplyToRenderers = true;
         private Vector2 _scrollPosition;
 
@@ -71,9 +77,28 @@ namespace KRT.MaterialTools.QuickVariant
             EditorGUILayout.Space();
 
 #if UNITY_2022_1_OR_NEWER
-            CreateAsVariant = EditorGUILayout.ToggleLeft("Create as Material Variant", CreateAsVariant);
+            CreateAsVariant = EditorGUILayout.Toggle("Create Material Variant", CreateAsVariant);
 #endif
-            ApplyToRenderers = EditorGUILayout.ToggleLeft("Apply to Renderers", ApplyToRenderers);
+            if (CreateAsVariant && Suffix == DefaultCopySuffix)
+            {
+                Suffix = DefaultVariantSuffix;
+            }
+            else if (!CreateAsVariant && Suffix == DefaultVariantSuffix)
+            {
+                Suffix = DefaultCopySuffix;
+            }
+            ApplyToRenderers = EditorGUILayout.Toggle("Apply to Renderers", ApplyToRenderers);
+
+            EditorGUILayout.Space();
+
+            Prefix = EditorGUILayout.TextField("Prefix", Prefix);
+            Suffix = EditorGUILayout.TextField("Suffix", Suffix);
+            var sampleMaterialName = SelectedMaterials.FirstOrDefault()?.name ?? "<Material Name>";
+            using (new EditorGUILayout.HorizontalScope())
+            {
+                EditorGUILayout.PrefixLabel("Example");
+                EditorGUILayout.LabelField($"{Prefix}{sampleMaterialName}{Suffix}");
+            }
 
             EditorGUILayout.Space();
 
@@ -120,7 +145,8 @@ namespace KRT.MaterialTools.QuickVariant
 #else
             var variant = false;
 #endif
-            var duplicatedMaterials = DuplicateMaterials(materials, directory, variant);
+
+            var duplicatedMaterials = DuplicateMaterials(materials, directory, Prefix, Suffix, variant);
             if (ApplyToRenderers)
             {
                 foreach (var renderer in Target.GetComponentsInChildren<Renderer>(true))
@@ -134,13 +160,13 @@ namespace KRT.MaterialTools.QuickVariant
             SelectedMaterials.Clear();
         }
 
-        private static Dictionary<Material, Material> DuplicateMaterials(Material[] materials, string directory, bool asVariant)
+        private static Dictionary<Material, Material> DuplicateMaterials(Material[] materials, string directory, string prefix, string suffix, bool asVariant)
         {
             var duplicatedMaterials = new Dictionary<Material, Material>();
             foreach (var material in materials)
             {
                 var newMaterial = Object.Instantiate(material);
-                newMaterial.name = asVariant ? $"{material.name} Variant" : $"{material.name} Copy";
+                newMaterial.name = $"{prefix}{material.name}{suffix}";
 #if UNITY_2022_1_OR_NEWER
                 if (asVariant)
                 {
