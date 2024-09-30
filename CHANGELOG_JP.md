@@ -11,10 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Material Diff: マテリアルの差分を表示する機能を追加。
 - Quick Variant: ゲームオブジェクトからMaterial Variantを一括作成するツール。
 - Material Variant: 複数のマテリアルからMaterial Variantを一括作成するツール。
+- Texture Replacer: プロジェクトビューでマテリアルを選択したときにウィンドウの対象のマテリアルを更新するオプションを追加。
 
 ### 変更
 
-- Texture Replacer: プロジェクトビューでマテリアルを選択したときにウィンドウの対象のマテリアルを更新するように変更。
 - 置換対象が見つからないときにメッセージを表示するように変更。
 - asmdef で Auto Referenced を false に変更。
 

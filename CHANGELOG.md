@@ -11,10 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Material Diff: Added a feature to display the difference between materials.
 - Quick Variant: A tool to create material variants in bulk from a game object.
 - Material Variant: A tool to create material variants in bulk from multiple materials.
+- Texture Replacer: Added an option to update the target material when a material is selected in the project view.
 
 ### Changed
 
-- Texture Replacer: Update the window's target material when a material is selected in the project view.
 - Show a message when replacement targets are not found.
 - Changed Auto Referenced to false in asmdef.
 

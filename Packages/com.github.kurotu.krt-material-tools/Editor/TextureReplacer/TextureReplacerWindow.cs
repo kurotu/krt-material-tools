@@ -15,7 +15,7 @@ namespace KRT.MaterialTools.TextureReplacer
         private TextureReplacerRule adhocRule = new TextureReplacerRule();
 
         [SerializeField]
-        private bool lockedToThisMaterial;
+        private bool updateTargetOnSelection;
 
         [SerializeField]
         internal Vector2 scrollPosition;
@@ -47,10 +47,10 @@ namespace KRT.MaterialTools.TextureReplacer
 
             using (var scope = new EditorGUI.ChangeCheckScope())
             {
-                lockedToThisMaterial = EditorGUILayout.Toggle("Lock to this material", lockedToThisMaterial);
+                updateTargetOnSelection = EditorGUILayout.Toggle("Update on select", updateTargetOnSelection);
                 if (scope.changed)
                 {
-                    if (!lockedToThisMaterial && Selection.activeObject is Material mat && material != mat)
+                    if (updateTargetOnSelection && Selection.activeObject is Material mat && material != mat)
                     {
                         material = mat;
                         adhocRule.Clear();
@@ -137,7 +137,7 @@ namespace KRT.MaterialTools.TextureReplacer
 
         private void OnEditorApplicationUpdate()
         {
-            if (lockedToThisMaterial) {
+            if (!updateTargetOnSelection) {
                 return;
             }
             if (Selection.activeObject is Material mat)
