@@ -18,6 +18,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - 置換対象が見つからないときにメッセージを表示するように変更。
 - asmdef で Auto Referenced を false に変更。
 
+### 削除
+
+- Unity 2019 のサポートを終了。
+
 ### 修正
 
 - Texture Replacer: 選択したマテリアルが変更されたときに置換テクスチャがクリアされない問題を修正。

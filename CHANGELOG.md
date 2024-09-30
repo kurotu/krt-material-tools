@@ -18,6 +18,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Show a message when replacement targets are not found.
 - Changed Auto Referenced to false in asmdef.
 
+### Removed
+
+- Support for Unity 2019.
+
 ### Fixed
 
 - Texture Replacer: Replacement textures not cleared when the selected material is changed.
