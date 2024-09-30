@@ -150,18 +150,11 @@ namespace KRT.MaterialTools.QuickVariant
 
         private void OnClickCreateMaterials()
         {
-            var directory = EditorUtility.SaveFolderPanel("Save Materials", "Assets", "");
+            var directory = CommonUtil.SelectAssetDirectory("Save Materials");
             if (string.IsNullOrEmpty(directory))
             {
                 return;
             }
-            directory = Path.GetRelativePath(Application.dataPath, directory);
-            if (directory.StartsWith("."))
-            {
-                Debug.LogError("Folder must be in Assets/ folder");
-                return;
-            }
-            directory = "Assets/" + directory;
 
             var materials = SelectedMaterials.ToArray();
 #if UNITY_2022_1_OR_NEWER
@@ -170,7 +163,7 @@ namespace KRT.MaterialTools.QuickVariant
             var variant = false;
 #endif
 
-            var duplicatedMaterials = DuplicateMaterials(materials, directory, Prefix, Suffix, variant);
+            var duplicatedMaterials = CommonUtil.DuplicateMaterials(materials, directory, Prefix, Suffix, variant);
             if (ApplyToRenderers)
             {
                 foreach (var renderer in Target.GetComponentsInChildren<Renderer>(true))
@@ -189,27 +182,6 @@ namespace KRT.MaterialTools.QuickVariant
         private void SelectAllMaterials()
         {
             SelectedMaterials = new List<Material>(GetMaterials(Target));
-        }
-
-        private static Dictionary<Material, Material> DuplicateMaterials(Material[] materials, string directory, string prefix, string suffix, bool asVariant)
-        {
-            var duplicatedMaterials = new Dictionary<Material, Material>();
-            foreach (var material in materials)
-            {
-                var newMaterial = Object.Instantiate(material);
-                newMaterial.name = $"{prefix}{material.name}{suffix}";
-#if UNITY_2022_1_OR_NEWER
-                if (asVariant)
-                {
-                    newMaterial.parent = material;
-                }
-#endif
-                var filePath = $"{directory}/{newMaterial.name}.mat";
-                filePath = AssetDatabase.GenerateUniqueAssetPath(filePath);
-                AssetDatabase.CreateAsset(newMaterial, filePath);
-                duplicatedMaterials.Add(material, newMaterial);
-            }
-            return duplicatedMaterials;
         }
 
         private static Material[] GetMaterials(GameObject go)
