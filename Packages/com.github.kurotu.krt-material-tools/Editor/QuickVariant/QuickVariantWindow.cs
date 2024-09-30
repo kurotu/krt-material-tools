@@ -87,7 +87,7 @@ namespace KRT.MaterialTools.QuickVariant
             EditorGUILayout.Space();
 
 #if UNITY_2022_1_OR_NEWER
-            CreateAsVariant = EditorGUILayout.Toggle("Create Material Variant", CreateAsVariant);
+            CreateAsVariant = EditorGUILayout.Toggle("Use Material Variant", CreateAsVariant);
 #else
             CreateAsVariant = false;
 #endif
