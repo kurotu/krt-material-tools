@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### 追加
 
 - Material Diff: マテリアルの差分を表示する機能を追加。
+- Quick Variant: ゲームオブジェクトからMaterial Variantを一括作成するツール。
 
 ### 変更
 
