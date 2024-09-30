@@ -49,6 +49,18 @@ namespace KRT.MaterialTools.QuickVariant
             using var scrollView = new EditorGUILayout.ScrollViewScope(_scrollPosition);
             _scrollPosition = scrollView.scrollPosition;
 
+            using (new EditorGUILayout.HorizontalScope())
+            {
+                if (GUILayout.Button("Select All"))
+                {
+                    OnClickSelectAll();
+                }
+                if (GUILayout.Button("Clear"))
+                {
+                    OnClickClear();
+                }
+            }
+
             foreach (var material in GetMaterials(Target))
             {
                 using (new EditorGUILayout.HorizontalScope())
@@ -119,9 +131,21 @@ namespace KRT.MaterialTools.QuickVariant
             OnChangeTargetGameObject();
         }
 
+        #region Event Handlers
+
+        private void OnClickSelectAll()
+        {
+            SelectAllMaterials();
+        }
+
+        private void OnClickClear()
+        {
+            SelectedMaterials.Clear();
+        }
+
         private void OnChangeTargetGameObject()
         {
-            SelectedMaterials = new List<Material>(GetMaterials(Target));
+            SelectAllMaterials();
         }
 
         private void OnClickCreateMaterials()
@@ -158,6 +182,13 @@ namespace KRT.MaterialTools.QuickVariant
                 }
             }
             SelectedMaterials.Clear();
+        }
+
+        #endregion
+
+        private void SelectAllMaterials()
+        {
+            SelectedMaterials = new List<Material>(GetMaterials(Target));
         }
 
         private static Dictionary<Material, Material> DuplicateMaterials(Material[] materials, string directory, string prefix, string suffix, bool asVariant)
