@@ -44,6 +44,18 @@ You would not forget to change all of them.
 2. Textures are listed. Set textures to **Replacement** column.
 3. Press **Apply** button to overwrite, or **Save As...** button to save as a new material. Then the textures are applied.
 
+### Quick Variant
+
+Tool to create material variants in bulk.
+
+This tool would be useful when you want to create variants for each material of the game object.
+
+![Quick Variant](./images/quick-variant.png)
+
+1. Set a game object to the window.
+2. Press **Create Materials** button. Material variants are created for each material in the selected folder.
+3. Created materials are applied to renderers of the game object.
+
 ### Material Diff
 
 Tool to display the difference between materials.
@@ -122,6 +134,18 @@ Download the latest .unitypackage from [the release page](https://github.com/kur
 1. 開いたウィンドウにマテリアルを設定します。
 2. テクスチャが列挙されるので、入れ替えたいテクスチャを **Replacement** 列に設定します。
 3. **Apply** で上書き、または **Save As...** で別マテリアルとして保存し、設定したテクスチャを反映します。
+
+### Quick Variant
+
+Material Variantを一括で作成するツールです。
+
+GameObjectに含まれている各マテリアルに対してMaterial Variantを作成したいときに便利です。
+
+![Quick Variant](./images/quick-variant.png)
+
+1. 開いたウィンドウに GameObject を設定します。
+2. **Create Materials** を押すと、選択したフォルダに対して各マテリアルのVariantが作成されます。
+3. 作成されたマテリアルがGameObjectのRendererに適用されます。
 
 ### Material Diff
 

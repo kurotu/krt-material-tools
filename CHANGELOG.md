@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Material Diff: Added a feature to display the difference between materials.
+- Quick Variant: A tool to create material variants in bulk from a game object.
 
 ### Changed
 

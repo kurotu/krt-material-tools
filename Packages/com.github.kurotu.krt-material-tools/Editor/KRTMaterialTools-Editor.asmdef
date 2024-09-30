@@ -1,6 +1,9 @@
 {
     "name": "KRTMaterialTools-Editor",
-    "references": [],
+    "references": [
+        "VRC.SDK3A",
+        "nadena.dev.modular-avatar.core"
+    ],
     "includePlatforms": [
         "Editor"
     ],
@@ -10,6 +13,17 @@
     "precompiledReferences": [],
     "autoReferenced": false,
     "defineConstraints": [],
-    "versionDefines": [],
+    "versionDefines": [
+        {
+            "name": "com.vrchat.avatars",
+            "expression": "",
+            "define": "KMT_VRCSDK3A"
+        },
+        {
+            "name": "nadena.dev.modular-avatar",
+            "expression": "",
+            "define": "KMT_MODULAR_AVATAR"
+        }
+    ],
     "noEngineReferences": false
 }
