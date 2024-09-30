@@ -1,7 +1,7 @@
 {
   "name": "com.github.kurotu.krt-material-tools",
   "displayName": "KRT Material Tools",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Small tools to manipulate materials",
   "license": "MIT",
   "author": {
