@@ -170,7 +170,14 @@ namespace KRT.MaterialTools.QuickVariant
                 {
                     Undo.RecordObject(renderer, "Apply duplicated materials");
                     renderer.sharedMaterials = renderer.sharedMaterials
-                        .Select(m => duplicatedMaterials.TryGetValue(m, out var newMaterial) ? newMaterial : m)
+                        .Select(m =>
+                        {
+                            if (m == null)
+                            {
+                                return null;
+                            }
+                            return duplicatedMaterials.TryGetValue(m, out var newMaterial) ? newMaterial : m;
+                        })
                         .ToArray();
                 }
             }
@@ -214,6 +221,7 @@ namespace KRT.MaterialTools.QuickVariant
 #if KMT_MODULAR_AVATAR
                 .Concat(maMaterials)
 #endif
+                .Where(m => m != null)
                 .Distinct().OrderBy(m => m.name).ToArray();
         }
 
