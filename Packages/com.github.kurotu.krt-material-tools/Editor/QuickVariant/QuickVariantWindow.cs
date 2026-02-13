@@ -194,7 +194,8 @@ namespace KRT.MaterialTools.QuickVariant
         private static Material[] GetMaterials(GameObject go)
         {
             var rendererMaterials = go.GetComponentsInChildren<Renderer>(true)
-                .SelectMany(r => r.sharedMaterials);
+                .SelectMany(r => r.sharedMaterials)
+                .Where(m => m != null);
             var animatorMaterials = go.GetComponentsInChildren<Animator>(true)
                 .Where(a => a.runtimeAnimatorController != null)
                 .SelectMany(a => a.runtimeAnimatorController.animationClips)
@@ -221,7 +222,6 @@ namespace KRT.MaterialTools.QuickVariant
 #if KMT_MODULAR_AVATAR
                 .Concat(maMaterials)
 #endif
-                .Where(m => m != null)
                 .Distinct().OrderBy(m => m.name).ToArray();
         }
 
